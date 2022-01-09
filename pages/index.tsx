@@ -151,7 +151,7 @@ const Home: NextPage = () => {
                 placeholder="Title"
                 maxLength={280}
                 disabled={isSubmitting}
-                className="form-input text-black px-4 py-3 w-full rounded-md border-2 border-gray-300 focus:ring-blue-400 focus:border-blue-400"
+                className="form-input text-black px-4 py-3 w-full rounded-md border-2 border-gray-300 focus:ring-amber-400 focus:border-amber-400"
                 required
               />
 
@@ -159,7 +159,7 @@ const Home: NextPage = () => {
                 name="content"
                 placeholder="Message"
                 disabled={isSubmitting}
-                className="form-input text-black px-4 py-3 w-full rounded-md border-2 border-gray-300 focus:ring-blue-400 focus:border-blue-400"
+                className="form-input text-black px-4 py-3 w-full rounded-md border-2 border-gray-300 focus:ring-amber-400 focus:border-amber-400"
                 required
               />
 
@@ -171,7 +171,7 @@ const Home: NextPage = () => {
               w-full
               px-3 py-2
               border-2 border-gray-300 dark:border-gray-800
-              focus:ring-blue-400 focus:border-blue-400
+              focus:ring-amber-400 focus:border-amber-400
               bg-white dark:bg-gray-800
               text-gray-900 dark:text-gray-100
               text-xl
