@@ -6,10 +6,14 @@ import {
   WalletMultiButton,
 } from '@solana/wallet-adapter-react-ui';
 import * as anchor from '@project-serum/anchor';
-import { useWallet } from '@solana/wallet-adapter-react';
+import { useWallet, useConnection } from '@solana/wallet-adapter-react';
 
 import { useProgram } from 'hooks/useProgram';
 import { SolanaAds } from 'idl/solana_ads';
+
+const MAX_SIZE_TX = 100;
+const chunkString = (str: string, length: number) =>
+  str.match(new RegExp('.{1,' + length + '}', 'g'));
 
 const loader = (
   <svg
@@ -36,6 +40,7 @@ const loader = (
 
 const Home: NextPage = () => {
   const { wallet, publicKey } = useWallet();
+  const { connection } = useConnection();
   const program = useProgram();
 
   const [adAccounts, setAdAccounts] = useState<
@@ -47,7 +52,7 @@ const Home: NextPage = () => {
     setIsAdAccountsLoading(true);
     try {
       const adAccounts = await program.account.ad.all();
-      setAdAccounts(adAccounts);
+      setAdAccounts(adAccounts.sort((acc1, acc2) => acc1.account.timestamp.cmp(acc2.account.timestamp)));
     } catch (e) {
       console.log('fetch adAccounts error', e);
     } finally {
@@ -69,29 +74,65 @@ const Home: NextPage = () => {
 
       const title = e.target.elements.title.value;
       const content = e.target.elements.content.value;
+      const textLimit = title.length + content.length;
+      let chunks = chunkString(`${title}${content}`, MAX_SIZE_TX) as string[];
+      const firstContent = chunks.shift()?.substring(title.length);
 
       const adAccountKeys = anchor.web3.Keypair.generate();
+      const feePayer = program.provider.wallet.publicKey;
 
       try {
-        await program.rpc.createAd(title, content, {
+        const { blockhash: recentBlockhash } = await connection.getRecentBlockhash();
+        const createAdTx = await program.transaction.createAd(title, firstContent, textLimit, {
           accounts: {
             ad: adAccountKeys.publicKey,
             authority: program.provider.wallet.publicKey,
             systemProgram: anchor.web3.SystemProgram.programId,
           },
-          signers: [adAccountKeys],
         });
+        createAdTx.recentBlockhash = recentBlockhash;
+        createAdTx.feePayer = feePayer;
+        createAdTx.partialSign(adAccountKeys);
+
+        const signedCreate = await program.provider.wallet.signAllTransactions([createAdTx]);
+        await Promise.all(
+          (signedCreate || []).map((transaction) =>
+            connection.sendRawTransaction(transaction.serialize()),
+          ),
+        );
+
+        if (chunks.length) {
+          const appendAdContentTxs = await Promise.all(chunks.map(async (chunkContent) => {
+            const appendAdContentTx = await program.transaction.appendAdContent(chunkContent, {
+              accounts: {
+                ad: adAccountKeys.publicKey,
+                authority: program.provider.wallet.publicKey,
+              },
+            });
+            appendAdContentTx.recentBlockhash = recentBlockhash;
+            appendAdContentTx.feePayer = feePayer;
+            return appendAdContentTx;
+          }));
+
+          const signedAppend = await program.provider.wallet.signAllTransactions(appendAdContentTxs);
+          await Promise.all(
+            (signedAppend || []).map((transaction) =>
+              connection.sendRawTransaction(transaction.serialize()),
+            ),
+          );
+        }
+
         formRef.current?.reset();
         setTimeout(() => {
           fetchAdAccounts();
-        }, 500);
+        }, 850);
       } catch (e) {
         console.log('createAd error', e);
       } finally {
         setIsSubmitting(false);
       }
     },
-    [program, fetchAdAccounts],
+    [program, connection, fetchAdAccounts],
   );
   return (
     <div>
@@ -122,14 +163,18 @@ const Home: NextPage = () => {
                 return (
                   <div
                     key={index}
-                    className={`w-full p-6 bg-white ${isMine ? 'border-4 border-amber-100' : 'border-4 border-white'} rounded-xl shadow-lg flex items-center space-x-4`}
+                    className={`w-full p-6 bg-white ${
+                      isMine
+                        ? 'border-4 border-amber-100'
+                        : 'border-4 border-white'
+                    } rounded-xl shadow-lg flex items-center space-x-4`}
                   >
                     <div>
                       <div className="text-xl font-medium text-black">
                         {account.title as string}
                       </div>
                       <p className="text-gray-600 m-0">
-                        {account.content as string || '-'}
+                        {(account.content as string) || '-'}
                       </p>
                     </div>
                   </div>

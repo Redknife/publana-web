@@ -12,7 +12,7 @@ export type SolanaAds = {
         },
         {
           "name": "authority",
-          "isMut": true,
+          "isMut": false,
           "isSigner": true
         },
         {
@@ -29,6 +29,10 @@ export type SolanaAds = {
         {
           "name": "content",
           "type": "string"
+        },
+        {
+          "name": "textLimit",
+          "type": "u32"
         }
       ]
     },
@@ -51,6 +55,27 @@ export type SolanaAds = {
           "name": "title",
           "type": "string"
         },
+        {
+          "name": "content",
+          "type": "string"
+        }
+      ]
+    },
+    {
+      "name": "appendAdContent",
+      "accounts": [
+        {
+          "name": "ad",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "authority",
+          "isMut": false,
+          "isSigner": true
+        }
+      ],
+      "args": [
         {
           "name": "content",
           "type": "string"
@@ -95,26 +120,13 @@ export type SolanaAds = {
           {
             "name": "authority",
             "type": "publicKey"
+          },
+          {
+            "name": "textLimit",
+            "type": "u32"
           }
         ]
       }
-    }
-  ],
-  "events": [
-    {
-      "name": "AdEvent",
-      "fields": [
-        {
-          "name": "label",
-          "type": "string",
-          "index": false
-        },
-        {
-          "name": "adId",
-          "type": "publicKey",
-          "index": false
-        }
-      ]
     }
   ],
   "errors": [
@@ -122,6 +134,11 @@ export type SolanaAds = {
       "code": 6000,
       "name": "TitleTooLong",
       "msg": "The provided title should be 280 characters long maximum."
+    },
+    {
+      "code": 6001,
+      "name": "TextLimitExceeded",
+      "msg": "Can not update Ad. Text limit will be exceeded."
     }
   ]
 };
@@ -140,7 +157,7 @@ export const IDL: SolanaAds = {
         },
         {
           "name": "authority",
-          "isMut": true,
+          "isMut": false,
           "isSigner": true
         },
         {
@@ -157,6 +174,10 @@ export const IDL: SolanaAds = {
         {
           "name": "content",
           "type": "string"
+        },
+        {
+          "name": "textLimit",
+          "type": "u32"
         }
       ]
     },
@@ -179,6 +200,27 @@ export const IDL: SolanaAds = {
           "name": "title",
           "type": "string"
         },
+        {
+          "name": "content",
+          "type": "string"
+        }
+      ]
+    },
+    {
+      "name": "appendAdContent",
+      "accounts": [
+        {
+          "name": "ad",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "authority",
+          "isMut": false,
+          "isSigner": true
+        }
+      ],
+      "args": [
         {
           "name": "content",
           "type": "string"
@@ -223,26 +265,13 @@ export const IDL: SolanaAds = {
           {
             "name": "authority",
             "type": "publicKey"
+          },
+          {
+            "name": "textLimit",
+            "type": "u32"
           }
         ]
       }
-    }
-  ],
-  "events": [
-    {
-      "name": "AdEvent",
-      "fields": [
-        {
-          "name": "label",
-          "type": "string",
-          "index": false
-        },
-        {
-          "name": "adId",
-          "type": "publicKey",
-          "index": false
-        }
-      ]
     }
   ],
   "errors": [
@@ -250,6 +279,11 @@ export const IDL: SolanaAds = {
       "code": 6000,
       "name": "TitleTooLong",
       "msg": "The provided title should be 280 characters long maximum."
+    },
+    {
+      "code": 6001,
+      "name": "TextLimitExceeded",
+      "msg": "Can not update Ad. Text limit will be exceeded."
     }
   ]
 };
