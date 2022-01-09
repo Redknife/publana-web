@@ -11,7 +11,7 @@ import { useWallet, useConnection } from '@solana/wallet-adapter-react';
 import { useProgram } from 'hooks/useProgram';
 import { SolanaAds } from 'idl/solana_ads';
 
-const MAX_SIZE_TX = 100;
+const MAX_SIZE_TX = 276;
 const chunkString = (str: string, length: number) =>
   str.match(new RegExp('.{1,' + length + '}', 'g'));
 
@@ -72,8 +72,8 @@ const Home: NextPage = () => {
 
       setIsSubmitting(true);
 
-      const title = e.target.elements.title.value;
-      const content = e.target.elements.content.value;
+      const title = JSON.parse(JSON.stringify(e.target.elements.title.value));
+      const content = JSON.parse(JSON.stringify(e.target.elements.content.value));
       const textLimit = title.length + content.length;
       let chunks = chunkString(`${title}${content}`, MAX_SIZE_TX) as string[];
       const firstContent = chunks.shift()?.substring(title.length);
@@ -169,7 +169,7 @@ const Home: NextPage = () => {
                         : 'border-4 border-white'
                     } rounded-xl shadow-lg flex items-center space-x-4`}
                   >
-                    <div>
+                    <div className="overflow-hidden max-w-full">
                       <div className="text-xl font-medium text-black">
                         {account.title as string}
                       </div>
