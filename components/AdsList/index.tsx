@@ -54,10 +54,10 @@ export const AdsList = () => {
   return (
     <>
       <div className="prose dark:prose-dark">
-        <h2 className="flex items-center mb-4">
+        <h1 className="flex items-center mb-4">
           Ads
           {isAccountsLoading && <Spinner />}
-        </h2>
+        </h1>
       </div>
 
       <div className="grid grid-cols-1 gap-3">
