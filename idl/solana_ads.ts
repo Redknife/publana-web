@@ -19,6 +19,16 @@ export type SolanaAds = {
           "name": "systemProgram",
           "isMut": false,
           "isSigner": false
+        },
+        {
+          "name": "kolyanAccount",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "viktrchAccount",
+          "isMut": false,
+          "isSigner": false
         }
       ],
       "args": [
@@ -33,6 +43,10 @@ export type SolanaAds = {
         {
           "name": "textLimit",
           "type": "u32"
+        },
+        {
+          "name": "rank",
+          "type": "u64"
         }
       ]
     },
@@ -124,6 +138,10 @@ export type SolanaAds = {
           {
             "name": "textLimit",
             "type": "u32"
+          },
+          {
+            "name": "rank",
+            "type": "u64"
           }
         ]
       }
@@ -164,6 +182,16 @@ export const IDL: SolanaAds = {
           "name": "systemProgram",
           "isMut": false,
           "isSigner": false
+        },
+        {
+          "name": "kolyanAccount",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "viktrchAccount",
+          "isMut": false,
+          "isSigner": false
         }
       ],
       "args": [
@@ -178,6 +206,10 @@ export const IDL: SolanaAds = {
         {
           "name": "textLimit",
           "type": "u32"
+        },
+        {
+          "name": "rank",
+          "type": "u64"
         }
       ]
     },
@@ -269,6 +301,10 @@ export const IDL: SolanaAds = {
           {
             "name": "textLimit",
             "type": "u32"
+          },
+          {
+            "name": "rank",
+            "type": "u64"
           }
         ]
       }

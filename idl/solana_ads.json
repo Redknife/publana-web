@@ -19,6 +19,16 @@
           "name": "systemProgram",
           "isMut": false,
           "isSigner": false
+        },
+        {
+          "name": "kolyanAccount",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "viktrchAccount",
+          "isMut": false,
+          "isSigner": false
         }
       ],
       "args": [
@@ -33,6 +43,10 @@
         {
           "name": "textLimit",
           "type": "u32"
+        },
+        {
+          "name": "rank",
+          "type": "u64"
         }
       ]
     },
@@ -124,6 +138,10 @@
           {
             "name": "textLimit",
             "type": "u32"
+          },
+          {
+            "name": "rank",
+            "type": "u64"
           }
         ]
       }
