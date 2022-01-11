@@ -112,10 +112,10 @@ export const PubsList = () => {
                 `}
               >
                 <div className="overflow-hidden max-w-full">
-                  <div className="text-xl font-medium text-black dark:text-amber-200">
+                  <div className="text-xl font-medium text-gray-800 dark:text-amber-200">
                     {account.title as string}
                   </div>
-                  <p className="text-gray-600 dark:text-amber-50 m-0">
+                  <p className="text-gray-600 font-normal dark:text-amber-50 m-0">
                     {(account.content as string) || '-'}
                   </p>
                 </div>

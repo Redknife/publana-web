@@ -14,16 +14,9 @@ class MyDocument extends Document {
             crossOrigin="true"
           />
           <link
-            rel="preload"
-            as="style"
             href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&display=swap"
+            rel="stylesheet"
           />
-          <noscript>
-            <link
-              rel="stylesheet"
-              href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&display=swap"
-            />
-          </noscript>
 
           <link
             rel="apple-touch-icon"
@@ -47,7 +40,7 @@ class MyDocument extends Document {
           <meta content="#ffffff" name="theme-color" />
           <meta content="#ffffff" name="msapplication-TileColor" />
         </Head>
-        <body className="bg-amber-50/50 dark:bg-neutral-900 text-black dark:text-white">
+        <body className="bg-amber-50/50 dark:bg-neutral-900 text-gray-800 dark:text-white">
           <Main />
           <NextScript />
         </body>

@@ -138,7 +138,7 @@ const Add: NextPage = () => {
                 form-input
                 w-full
                 px-4 py-3
-                text-black dark:text-gray-100
+                text-gray-800 dark:text-gray-100
                 rounded-md
                 border-2 border-gray-300 dark:border-gray-800
                 focus:ring-amber-400 focus:border-amber-400 dark:focus:border-amber-400
@@ -157,7 +157,7 @@ const Add: NextPage = () => {
                 form-input
                 w-full
                 px-4 py-3
-                text-black dark:text-gray-100
+                text-gray-800 dark:text-gray-100
                 rounded-md
                 border-2 border-gray-300 dark:border-gray-800
                 focus:ring-amber-400 focus:border-amber-400 dark:focus:border-amber-400
@@ -178,7 +178,7 @@ const Add: NextPage = () => {
                 form-input
                 px-4 py-3
                 w-30
-                text-black dark:text-gray-100
+                text-gray-800 dark:text-gray-100
                 rounded-md
                 border-2 border-gray-300 dark:border-gray-800
                 focus:ring-amber-400 focus:border-amber-400 dark:focus:border-amber-400

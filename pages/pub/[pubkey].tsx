@@ -92,7 +92,7 @@ const Pub: NextPage = () => {
               <div className="text-xl font-medium text-black dark:text-amber-200">
                 {account.account.title as string}
               </div>
-              <p className="text-gray-600 dark:text-amber-50 m-0">
+              <p className="font-normal text-gray-600 dark:text-amber-50 m-0">
                 {(account.account.content as string) || '-'}
               </p>
             </>
