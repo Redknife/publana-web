@@ -11,7 +11,7 @@ import { Spinner } from 'components/Spinner';
 const programId = new PublicKey(idl.metadata.address);
 const coder = new Coder(IDL);
 
-export const AdsList = () => {
+export const PubsList = () => {
   const { connection } = useConnection();
 
   const [accounts, setAccounts] = useState<
@@ -55,7 +55,7 @@ export const AdsList = () => {
     <>
       <div className="prose dark:prose-dark">
         <h1 className="flex items-center mb-4">
-          Ads
+          Pubs
           {isAccountsLoading && <Spinner />}
         </h1>
       </div>
@@ -64,7 +64,7 @@ export const AdsList = () => {
         {accounts.map(({ account, publicKey }) => {
           const pk = publicKey.toString();
           return (
-            <Link href={`/ads/${pk}`} key={pk}>
+            <Link href={`/pub/${pk}`} key={pk}>
               <a
                 className={`
                   w-full

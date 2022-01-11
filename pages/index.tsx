@@ -1,12 +1,12 @@
 import type { NextPage } from 'next';
 
 import { Container } from 'components/Container';
-import { AdsList } from 'components/AdsList';
+import { PubsList } from 'components/PubsList';
 
 const Home: NextPage = () => {
   return (
     <Container>
-      <AdsList />
+      <PubsList />
     </Container>
   );
 };

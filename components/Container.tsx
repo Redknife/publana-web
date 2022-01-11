@@ -57,7 +57,7 @@ export const Container = (props: ContainerProps) => {
         <div>
           <NextLink href="/">
             <a className="p-1 text-gray-900 sm:p-4 dark:text-gray-100 hover:text-amber-500 dark:hover:text-amber-400 transition">
-              Ads
+              Pubs
             </a>
           </NextLink>
           <NextLink href="/add">

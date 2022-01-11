@@ -25,7 +25,7 @@ export const Footer = () => {
       <div className="w-full max-w-2xl grid grid-cols-1 gap-4 sm:grid-cols-2">
         <div className="flex flex-col space-y-4">
           <Link href="/">
-            <a className="text-gray-500 hover:text-gray-600 transition">Ads</a>
+            <a className="text-gray-500 hover:text-gray-600 transition">Pubs</a>
           </Link>
           <Link href="/add">
             <a className="text-gray-500 hover:text-gray-600 transition">Add</a>
