@@ -89,9 +89,9 @@ const Pub: NextPage = () => {
             </div>
           ) : account ? (
             <>
-              <div className="text-xl font-medium text-black dark:text-amber-200">
+              <h1 className="text-3xl font-medium text-black dark:text-amber-200 mb-4">
                 {account.account.title as string}
-              </div>
+              </h1>
               <p className="font-normal text-gray-600 dark:text-amber-50 m-0">
                 {(account.account.content as string) || '-'}
               </p>
