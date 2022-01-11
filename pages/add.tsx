@@ -9,6 +9,7 @@ import { useWallet, useConnection } from '@solana/wallet-adapter-react';
 import BN from 'bn.js';
 
 import { kolyanPublicKey, viktrchPublicKey } from 'consts';
+import { cusper } from 'utils/cusper';
 import { useProgram } from 'hooks/useProgram';
 import { Container } from 'components/Container';
 import { Spinner } from 'components/Spinner';
@@ -119,7 +120,13 @@ const Add: NextPage = () => {
 
         formRef.current?.reset();
       } catch (e) {
-        console.log('createAd error', e);
+        console.log('createAd original error', e);
+        // TODO: find a way to parse and log the caught error
+        try {
+          cusper.throwError(e as any);
+        } catch (e) {
+          console.log(e);
+        }
       } finally {
         setIsSubmitting(false);
       }
