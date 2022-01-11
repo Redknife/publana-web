@@ -65,6 +65,22 @@ const Add: NextPage = () => {
         createAdTx.feePayer = feePayer;
         createAdTx.partialSign(adAccountKeys);
 
+        console.log('Sign `createAd` transaction', {
+          title,
+          content: firstContent,
+          rank,
+          textLimit,
+          accounts: {
+            ad: adAccountKeys.publicKey.toString(),
+            kolyanAccount: kolyanPublicKey.toString(),
+            viktrchAccount: viktrchPublicKey.toString(),
+            authority: program.provider.wallet.publicKey.toString(),
+            systemProgram: anchor.web3.SystemProgram.programId.toString(),
+          },
+          partialSign: [adAccountKeys.publicKey.toString()],
+          feePayer: feePayer.toString(),
+          recentBlockhash,
+        });
         const signedCreate = await program.provider.wallet.signAllTransactions([
           createAdTx,
         ]);
