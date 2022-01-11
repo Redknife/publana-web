@@ -7,5 +7,6 @@ const withTM = require('next-transpile-modules')([
 ]);
 
 module.exports = withTM({
+  experimental: { esmExternals: true },
   reactStrictMode: true,
 });

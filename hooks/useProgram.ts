@@ -1,7 +1,7 @@
 import { useMemo } from 'react';
 import { useAnchorWallet, useConnection } from '@solana/wallet-adapter-react';
 import { PublicKey } from '@solana/web3.js';
-import { Provider, Program, } from '@project-serum/anchor';
+import { Provider, Program } from '@project-serum/anchor';
 
 import idl from 'idl/solana_ads.json';
 import { SolanaAds, IDL } from 'idl/solana_ads';
@@ -17,7 +17,10 @@ export const useProgram = () => {
 
   const provider = useMemo(() => {
     if (!wallet) return;
-    return new Provider(connection, wallet, { preflightCommitment, commitment });
+    return new Provider(connection, wallet, {
+      preflightCommitment,
+      commitment,
+    });
   }, [wallet, connection]);
 
   const program = useMemo(() => {
