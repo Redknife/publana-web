@@ -121,7 +121,7 @@ export const PubsList = () => {
                     {(account.content as string) || '-'}
                   </p>
                 </div>
-                {rank && (
+                {rank > 0 && (
                   <div className="absolute top-1 right-2.5 font-bold text-amber-500">
                     {rank}
                   </div>
