@@ -65,6 +65,7 @@ export const PubsList = () => {
 
       <div className="grid grid-cols-1 gap-3">
         {isAccountsLoading &&
+          !accounts.length &&
           [1, 2, 3, 4].map((skelId) => (
             <div
               key={skelId}
