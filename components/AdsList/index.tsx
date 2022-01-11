@@ -72,8 +72,9 @@ export const AdsList = () => {
                   space-x-4
                   p-6
                   bg-white dark:bg-gray-800
-                  border-4 border-white dark:border-gray-800
+                  border-4 border-white dark:border-gray-800 hover:border-amber-100 dark:hover:border-amber-100
                   rounded-xl shadow-lg
+                  transition ease-in-out
                 `}
               >
                 <div className="overflow-hidden max-w-full">
