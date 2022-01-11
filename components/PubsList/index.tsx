@@ -37,9 +37,12 @@ export const PubsList = () => {
           }),
         );
       setAccounts(
-        accounts.sort((acc1, acc2) =>
-          acc1.account.timestamp.cmp(acc2.account.timestamp),
-        ),
+        accounts.sort((acc1, acc2) => {
+          if (acc1.account.rank.eq(acc2.account.rank)) {
+            return acc1.account.timestamp.cmp(acc2.account.timestamp);
+          }
+          return acc1.account.rank.cmp(acc2.account.rank);
+        }),
       );
     } catch (e) {
       console.log('fetch accounts error', e);

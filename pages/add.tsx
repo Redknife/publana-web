@@ -6,7 +6,9 @@ import {
 } from '@solana/wallet-adapter-react-ui';
 import * as anchor from '@project-serum/anchor';
 import { useWallet, useConnection } from '@solana/wallet-adapter-react';
+import BN from 'bn.js';
 
+import { kolyanPublicKey, viktrchPublicKey } from 'consts';
 import { useProgram } from 'hooks/useProgram';
 import { Container } from 'components/Container';
 import { Spinner } from 'components/Spinner';
@@ -29,6 +31,7 @@ const Add: NextPage = () => {
 
       setIsSubmitting(true);
 
+      const rank = parseInt(e.target.elements.rank.value || 0);
       const title = JSON.parse(JSON.stringify(e.target.elements.title.value));
       const content = JSON.parse(
         JSON.stringify(e.target.elements.content.value),
@@ -47,9 +50,12 @@ const Add: NextPage = () => {
           title,
           firstContent,
           textLimit,
+          new BN(rank),
           {
             accounts: {
               ad: adAccountKeys.publicKey,
+              kolyanAccount: kolyanPublicKey,
+              viktrchAccount: viktrchPublicKey,
               authority: program.provider.wallet.publicKey,
               systemProgram: anchor.web3.SystemProgram.programId,
             },
@@ -136,6 +142,7 @@ const Add: NextPage = () => {
                 rounded-md
                 border-2 border-gray-300 dark:border-gray-800
                 focus:ring-amber-400 focus:border-amber-400 dark:focus:border-amber-400
+                hover:border-amber-400 dark:hover:border-amber-400
                 bg-white dark:bg-gray-800
                 transition
               "
@@ -154,10 +161,31 @@ const Add: NextPage = () => {
                 rounded-md
                 border-2 border-gray-300 dark:border-gray-800
                 focus:ring-amber-400 focus:border-amber-400 dark:focus:border-amber-400
+                hover:border-amber-400 dark:hover:border-amber-400
                 bg-white dark:bg-gray-800
                 transition
               "
               required
+            />
+
+            <input
+              type="number"
+              name="rank"
+              placeholder="Rank"
+              min="0"
+              disabled={isSubmitting}
+              className="
+                form-input
+                px-4 py-3
+                w-30
+                text-black dark:text-gray-100
+                rounded-md
+                border-2 border-gray-300 dark:border-gray-800
+                focus:ring-amber-400 focus:border-amber-400 dark:focus:border-amber-400
+                hover:border-amber-400 dark:hover:border-amber-400
+                bg-white dark:bg-gray-800
+                transition
+              "
             />
 
             <button
