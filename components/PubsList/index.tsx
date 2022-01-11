@@ -41,7 +41,7 @@ export const PubsList = () => {
           if (acc1.account.rank.eq(acc2.account.rank)) {
             return acc1.account.timestamp.cmp(acc2.account.timestamp);
           }
-          return acc1.account.rank.cmp(acc2.account.rank);
+          return acc2.account.rank.cmp(acc1.account.rank);
         }),
       );
     } catch (e) {
@@ -97,6 +97,7 @@ export const PubsList = () => {
           ))}
         {accounts.map(({ account, publicKey }) => {
           const pk = publicKey.toString();
+          const rank = account.rank.toNumber();
           return (
             <Link href={`/pub/${pk}`} key={pk}>
               <a
@@ -109,6 +110,7 @@ export const PubsList = () => {
                   border-4 border-white dark:border-gray-800 hover:border-amber-100 dark:hover:border-amber-100
                   rounded-xl shadow-lg
                   transition ease-in-out
+                  relative
                 `}
               >
                 <div className="overflow-hidden max-w-full">
@@ -119,6 +121,11 @@ export const PubsList = () => {
                     {(account.content as string) || '-'}
                   </p>
                 </div>
+                {rank && (
+                  <div className="absolute top-1 right-2.5 font-bold text-amber-500">
+                    {rank}
+                  </div>
+                )}
               </a>
             </Link>
           );
