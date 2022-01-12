@@ -12,7 +12,7 @@
         },
         {
           "name": "authority",
-          "isMut": false,
+          "isMut": true,
           "isSigner": true
         },
         {
@@ -21,13 +21,18 @@
           "isSigner": false
         },
         {
-          "name": "kolyanAccount",
-          "isMut": false,
+          "name": "viktrchAccount",
+          "isMut": true,
           "isSigner": false
         },
         {
-          "name": "viktrchAccount",
-          "isMut": false,
+          "name": "kolyanAccount",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "derivedAddress",
+          "isMut": true,
           "isSigner": false
         }
       ],

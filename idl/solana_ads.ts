@@ -12,7 +12,7 @@ export type SolanaAds = {
         },
         {
           "name": "authority",
-          "isMut": false,
+          "isMut": true,
           "isSigner": true
         },
         {
@@ -21,13 +21,18 @@ export type SolanaAds = {
           "isSigner": false
         },
         {
-          "name": "kolyanAccount",
-          "isMut": false,
+          "name": "viktrchAccount",
+          "isMut": true,
           "isSigner": false
         },
         {
-          "name": "viktrchAccount",
-          "isMut": false,
+          "name": "kolyanAccount",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "derivedAddress",
+          "isMut": true,
           "isSigner": false
         }
       ],
@@ -175,7 +180,7 @@ export const IDL: SolanaAds = {
         },
         {
           "name": "authority",
-          "isMut": false,
+          "isMut": true,
           "isSigner": true
         },
         {
@@ -184,13 +189,18 @@ export const IDL: SolanaAds = {
           "isSigner": false
         },
         {
-          "name": "kolyanAccount",
-          "isMut": false,
+          "name": "viktrchAccount",
+          "isMut": true,
           "isSigner": false
         },
         {
-          "name": "viktrchAccount",
-          "isMut": false,
+          "name": "kolyanAccount",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "derivedAddress",
+          "isMut": true,
           "isSigner": false
         }
       ],

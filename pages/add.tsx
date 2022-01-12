@@ -47,6 +47,11 @@ const Add: NextPage = () => {
       try {
         const { blockhash: recentBlockhash } =
           await connection.getRecentBlockhash();
+        const derivedAddress = await anchor.web3.PublicKey.findProgramAddress(
+          [Buffer.from('seed')],
+          program.programId,
+        );
+
         const createAdTx = await program.transaction.createAd(
           title,
           firstContent,
@@ -59,6 +64,7 @@ const Add: NextPage = () => {
               viktrchAccount: viktrchPublicKey,
               authority: program.provider.wallet.publicKey,
               systemProgram: anchor.web3.SystemProgram.programId,
+              derivedAddress,
             },
           },
         );
