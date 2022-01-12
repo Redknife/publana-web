@@ -83,7 +83,7 @@ const Add: NextPage = () => {
             viktrchAccount: viktrchPublicKey.toString(),
             authority: program.provider.wallet.publicKey.toString(),
             systemProgram: anchor.web3.SystemProgram.programId.toString(),
-            derivedAddress,
+            derivedAddress: derivedAddress.toString(),
           },
           partialSign: [adAccountKeys.publicKey.toString()],
           feePayer: feePayer.toString(),
