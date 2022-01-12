@@ -47,8 +47,9 @@ const Add: NextPage = () => {
       try {
         const { blockhash: recentBlockhash } =
           await connection.getRecentBlockhash();
-        const derivedAddress = await anchor.web3.PublicKey.findProgramAddress(
-          [Buffer.from('seed')],
+        const derivedAddress = await anchor.web3.PublicKey.createWithSeed(
+          program.provider.wallet.publicKey,
+          'seed',
           program.programId,
         );
 
