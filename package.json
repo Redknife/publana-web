@@ -10,6 +10,7 @@
   "dependencies": {
     "@metaplex-foundation/cusper": "0.0.2",
     "@project-serum/anchor": "0.19.1-beta.1",
+    "@rehooks/local-storage": "2.4.4",
     "@solana/wallet-adapter-base": "0.8.1",
     "@solana/wallet-adapter-react": "0.14.1",
     "@solana/wallet-adapter-react-ui": "0.7.0",
