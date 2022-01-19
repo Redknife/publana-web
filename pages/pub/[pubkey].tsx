@@ -1,4 +1,4 @@
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useMemo } from 'react';
 import type { NextPage } from 'next';
 import { useRouter } from 'next/router';
 import { useConnection } from '@solana/wallet-adapter-react';
@@ -7,6 +7,7 @@ import { PublicKey } from '@solana/web3.js';
 
 import { IDL } from 'idl/solana_ads';
 import { Container } from 'components/Container';
+import { ExplorerLink } from 'components/ExplorerLink';
 
 const coder = new Coder(IDL);
 
@@ -48,6 +49,16 @@ const Pub: NextPage = () => {
     fetchAccounts();
   }, [fetchAccounts]);
 
+  const datetime = useMemo<string | undefined>(() => {
+    const timestamp = account?.account.timestamp.toNumber();
+    if (!timestamp) return;
+
+    const date = new Date(timestamp * 1000);
+    const localeDate = date.toLocaleDateString();
+    const localeTime = date.toLocaleTimeString();
+    return `${localeDate} ${localeTime}`;
+  }, [account]);
+
   return (
     <Container>
       <div
@@ -61,7 +72,7 @@ const Pub: NextPage = () => {
           rounded-xl shadow-lg
         `}
       >
-        <div className="overflow-hidden max-w-full w-full">
+        <div className="flex flex-col overflow-hidden max-w-full w-full">
           {isLoading ? (
             <div className="animate-pulse flex space-x-4">
               <div className="flex-1 space-y-6 py-1">
@@ -88,14 +99,66 @@ const Pub: NextPage = () => {
               </div>
             </div>
           ) : account ? (
-            <>
-              <h1 className="text-3xl font-medium text-black dark:text-amber-200 mb-4">
-                {account.account.title as string}
-              </h1>
-              <p className="font-normal text-gray-600 dark:text-amber-50 m-0">
-                {(account.account.content as string) || '-'}
-              </p>
-            </>
+            <article className="flex flex-col flex-1">
+              <header>
+                <h1 className="text-3xl font-medium text-black dark:text-amber-200 mb-4">
+                  {account.account.title as string}
+                </h1>
+              </header>
+              <div className="flex-1">
+                <p className="font-normal text-gray-600 dark:text-amber-50 m-0">
+                  {(account.account.content as string) || '-'}
+                </p>
+              </div>
+              <footer
+                className="
+                sm:flex flex-row justify-between items-end
+                space-y-2
+                pt-4 mt-8
+                border-t-2 border-gray-200 dark:border-gray-600
+              "
+              >
+                <div className="sm:flex flex-row sm:space-x-4 space-y-2 sm:space-y-0">
+                  <div>
+                    <div className="text-xs text-gray-500 dark:text-gray-400">
+                      Date
+                    </div>
+                    <div className="text-gray-600 dark:text-gray-300">
+                      {datetime}
+                    </div>
+                  </div>
+                  <div>
+                    <div className="text-xs text-gray-500 dark:text-gray-400">
+                      Rank
+                    </div>
+                    <div className="text-gray-600 dark:text-gray-300">
+                      {account.account.rank.toNumber()}
+                    </div>
+                  </div>
+                </div>
+                <div className="sm:flex flex-row sm:space-x-4 space-y-2 sm:space-y-0">
+                  {pubkey && (
+                    <div>
+                      <ExplorerLink
+                        address={pubkey as string}
+                        className="text-gray-600 dark:text-gray-100 hover:text-amber-500 dark:hover:text-amber-400 transition"
+                      >
+                        Account
+                      </ExplorerLink>
+                    </div>
+                  )}
+
+                  <div>
+                    <ExplorerLink
+                      address={account?.account.authority.toString()}
+                      className="text-gray-600 dark:text-gray-100 hover:text-amber-500 dark:hover:text-amber-400 transition"
+                    >
+                      Authority
+                    </ExplorerLink>
+                  </div>
+                </div>
+              </footer>
+            </article>
           ) : (
             <span>Failed to load data</span>
           )}

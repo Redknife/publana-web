@@ -1,6 +1,5 @@
 import '@solana/wallet-adapter-react-ui/styles.css';
 import { ReactNode, useMemo } from 'react';
-import { WalletAdapterNetwork } from '@solana/wallet-adapter-base';
 import {
   ConnectionProvider,
   WalletProvider,
