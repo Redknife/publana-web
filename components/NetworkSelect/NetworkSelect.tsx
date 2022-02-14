@@ -20,11 +20,12 @@ export const NetworkSelect = () => {
       className="
         form-select
         block
+        h-[40px]
         font-normal
         border-1 border-gray-300 dark:border-gray-800
         focus:ring-amber-400 focus:border-amber-400 hover:border-amber-400 dark:hover:border-amber-400
         bg-white dark:bg-gray-800
-        text-gray-900 dark:text-gray-100 hover:text-amber-400 dark:hover:text-amber-400
+        text-gray-900 dark:text-gray-100
         text-sm
         transition
         rounded-md

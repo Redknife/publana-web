@@ -4,6 +4,7 @@ import { useRouter } from 'next/router';
 import { useConnection } from '@solana/wallet-adapter-react';
 import { Coder, ProgramAccount } from '@project-serum/anchor';
 import { PublicKey } from '@solana/web3.js';
+import isUrl from 'is-url';
 
 import { IDL } from 'idl/solana_ads';
 import { Container } from 'components/Container';
@@ -105,6 +106,9 @@ const Pub: NextPage = () => {
                   {account.account.title as string}
                 </h1>
               </header>
+              {isUrl(account.account.image) && (
+                <img src={account.account.image} className="max-w-full mb-3" />
+              )}
               <div className="flex-1">
                 <p className="font-normal text-gray-600 dark:text-amber-50 m-0">
                   {(account.account.content as string) || '-'}

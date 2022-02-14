@@ -21,7 +21,7 @@
           "isSigner": false
         },
         {
-          "name": "viktrchAccount",
+          "name": "derivedAddress",
           "isMut": true,
           "isSigner": false
         },
@@ -31,7 +31,7 @@
           "isSigner": false
         },
         {
-          "name": "derivedAddress",
+          "name": "viktrchAccount",
           "isMut": true,
           "isSigner": false
         }
@@ -46,11 +46,56 @@
           "type": "string"
         },
         {
+          "name": "image",
+          "type": "string"
+        },
+        {
           "name": "textLimit",
           "type": "u32"
         },
         {
           "name": "rank",
+          "type": "u64"
+        }
+      ]
+    },
+    {
+      "name": "transferTax",
+      "accounts": [
+        {
+          "name": "ad",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "authority",
+          "isMut": true,
+          "isSigner": true
+        },
+        {
+          "name": "systemProgram",
+          "isMut": false,
+          "isSigner": false
+        },
+        {
+          "name": "derivedAddress",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "kolyanAccount",
+          "isMut": true,
+          "isSigner": false
+        },
+        {
+          "name": "viktrchAccount",
+          "isMut": true,
+          "isSigner": false
+        }
+      ],
+      "args": [
+        {
+          "name": "tax",
           "type": "u64"
         }
       ]
@@ -133,6 +178,10 @@
             "type": "string"
           },
           {
+            "name": "image",
+            "type": "string"
+          },
+          {
             "name": "timestamp",
             "type": "i64"
           },
@@ -147,6 +196,37 @@
           {
             "name": "rank",
             "type": "u64"
+          }
+        ]
+      }
+    }
+  ],
+  "types": [
+    {
+      "name": "Categories",
+      "type": {
+        "kind": "enum",
+        "variants": [
+          {
+            "name": "Buy"
+          },
+          {
+            "name": "Sell"
+          },
+          {
+            "name": "LookingForJob"
+          },
+          {
+            "name": "JobOffer"
+          },
+          {
+            "name": "NFT"
+          },
+          {
+            "name": "Message"
+          },
+          {
+            "name": "Other"
           }
         ]
       }

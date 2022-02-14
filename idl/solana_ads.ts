@@ -1,335 +1,495 @@
 export type SolanaAds = {
-  "version": "0.1.0",
-  "name": "solana_ads",
-  "instructions": [
+  version: '0.1.0';
+  name: 'solana_ads';
+  instructions: [
     {
-      "name": "createAd",
-      "accounts": [
+      name: 'createAd';
+      accounts: [
         {
-          "name": "ad",
-          "isMut": true,
-          "isSigner": true
+          name: 'ad';
+          isMut: true;
+          isSigner: true;
         },
         {
-          "name": "authority",
-          "isMut": true,
-          "isSigner": true
+          name: 'authority';
+          isMut: true;
+          isSigner: true;
         },
         {
-          "name": "systemProgram",
-          "isMut": false,
-          "isSigner": false
+          name: 'systemProgram';
+          isMut: false;
+          isSigner: false;
         },
         {
-          "name": "viktrchAccount",
-          "isMut": true,
-          "isSigner": false
+          name: 'derivedAddress';
+          isMut: true;
+          isSigner: false;
         },
         {
-          "name": "kolyanAccount",
-          "isMut": true,
-          "isSigner": false
+          name: 'kolyanAccount';
+          isMut: true;
+          isSigner: false;
         },
         {
-          "name": "derivedAddress",
-          "isMut": true,
-          "isSigner": false
-        }
-      ],
-      "args": [
+          name: 'viktrchAccount';
+          isMut: true;
+          isSigner: false;
+        },
+      ];
+      args: [
         {
-          "name": "title",
-          "type": "string"
+          name: 'title';
+          type: 'string';
         },
         {
-          "name": "content",
-          "type": "string"
+          name: 'content';
+          type: 'string';
         },
         {
-          "name": "textLimit",
-          "type": "u32"
+          name: 'image';
+          type: 'string';
         },
         {
-          "name": "rank",
-          "type": "u64"
-        }
-      ]
+          name: 'textLimit';
+          type: 'u32';
+        },
+        {
+          name: 'rank';
+          type: 'u64';
+        },
+      ];
     },
     {
-      "name": "updateAd",
-      "accounts": [
+      name: 'transferTax';
+      accounts: [
         {
-          "name": "ad",
-          "isMut": true,
-          "isSigner": false
+          name: 'ad';
+          isMut: true;
+          isSigner: true;
         },
         {
-          "name": "authority",
-          "isMut": false,
-          "isSigner": true
-        }
-      ],
-      "args": [
-        {
-          "name": "title",
-          "type": "string"
+          name: 'authority';
+          isMut: true;
+          isSigner: true;
         },
         {
-          "name": "content",
-          "type": "string"
-        }
-      ]
+          name: 'systemProgram';
+          isMut: false;
+          isSigner: false;
+        },
+        {
+          name: 'derivedAddress';
+          isMut: true;
+          isSigner: false;
+        },
+        {
+          name: 'kolyanAccount';
+          isMut: true;
+          isSigner: false;
+        },
+        {
+          name: 'viktrchAccount';
+          isMut: true;
+          isSigner: false;
+        },
+      ];
+      args: [
+        {
+          name: 'tax';
+          type: 'u64';
+        },
+      ];
     },
     {
-      "name": "appendAdContent",
-      "accounts": [
+      name: 'updateAd';
+      accounts: [
         {
-          "name": "ad",
-          "isMut": true,
-          "isSigner": false
+          name: 'ad';
+          isMut: true;
+          isSigner: false;
         },
         {
-          "name": "authority",
-          "isMut": false,
-          "isSigner": true
-        }
-      ],
-      "args": [
+          name: 'authority';
+          isMut: false;
+          isSigner: true;
+        },
+      ];
+      args: [
         {
-          "name": "content",
-          "type": "string"
-        }
-      ]
-    },
-    {
-      "name": "deleteAd",
-      "accounts": [
-        {
-          "name": "ad",
-          "isMut": true,
-          "isSigner": false
+          name: 'title';
+          type: 'string';
         },
         {
-          "name": "authority",
-          "isMut": true,
-          "isSigner": true
-        }
-      ],
-      "args": []
-    }
-  ],
-  "accounts": [
-    {
-      "name": "ad",
-      "type": {
-        "kind": "struct",
-        "fields": [
-          {
-            "name": "title",
-            "type": "string"
-          },
-          {
-            "name": "content",
-            "type": "string"
-          },
-          {
-            "name": "timestamp",
-            "type": "i64"
-          },
-          {
-            "name": "authority",
-            "type": "publicKey"
-          },
-          {
-            "name": "textLimit",
-            "type": "u32"
-          },
-          {
-            "name": "rank",
-            "type": "u64"
-          }
-        ]
-      }
-    }
-  ],
-  "errors": [
-    {
-      "code": 6000,
-      "name": "TitleTooLong",
-      "msg": "The provided title should be 280 characters long maximum."
+          name: 'content';
+          type: 'string';
+        },
+      ];
     },
     {
-      "code": 6001,
-      "name": "TextLimitExceeded",
-      "msg": "Can not update Ad. Text limit will be exceeded."
-    }
-  ]
+      name: 'appendAdContent';
+      accounts: [
+        {
+          name: 'ad';
+          isMut: true;
+          isSigner: false;
+        },
+        {
+          name: 'authority';
+          isMut: false;
+          isSigner: true;
+        },
+      ];
+      args: [
+        {
+          name: 'content';
+          type: 'string';
+        },
+      ];
+    },
+    {
+      name: 'deleteAd';
+      accounts: [
+        {
+          name: 'ad';
+          isMut: true;
+          isSigner: false;
+        },
+        {
+          name: 'authority';
+          isMut: true;
+          isSigner: true;
+        },
+      ];
+      args: [];
+    },
+  ];
+  accounts: [
+    {
+      name: 'ad';
+      type: {
+        kind: 'struct';
+        fields: [
+          {
+            name: 'title';
+            type: 'string';
+          },
+          {
+            name: 'content';
+            type: 'string';
+          },
+          {
+            name: 'image';
+            type: 'string';
+          },
+          {
+            name: 'timestamp';
+            type: 'i64';
+          },
+          {
+            name: 'authority';
+            type: 'publicKey';
+          },
+          {
+            name: 'textLimit';
+            type: 'u32';
+          },
+          {
+            name: 'rank';
+            type: 'u64';
+          },
+        ];
+      };
+    },
+  ];
+  types: [
+    {
+      name: 'Categories';
+      type: {
+        kind: 'enum';
+        variants: [
+          {
+            name: 'Buy';
+          },
+          {
+            name: 'Sell';
+          },
+          {
+            name: 'LookingForJob';
+          },
+          {
+            name: 'JobOffer';
+          },
+          {
+            name: 'NFT';
+          },
+          {
+            name: 'Message';
+          },
+          {
+            name: 'Other';
+          },
+        ];
+      };
+    },
+  ];
+  errors: [
+    {
+      code: 6000;
+      name: 'TitleTooLong';
+      msg: 'The provided title should be 280 characters long maximum.';
+    },
+    {
+      code: 6001;
+      name: 'TextLimitExceeded';
+      msg: 'Can not update Ad. Text limit will be exceeded.';
+    },
+  ];
 };
 
 export const IDL: SolanaAds = {
-  "version": "0.1.0",
-  "name": "solana_ads",
-  "instructions": [
+  version: '0.1.0',
+  name: 'solana_ads',
+  instructions: [
     {
-      "name": "createAd",
-      "accounts": [
+      name: 'createAd',
+      accounts: [
         {
-          "name": "ad",
-          "isMut": true,
-          "isSigner": true
+          name: 'ad',
+          isMut: true,
+          isSigner: true,
         },
         {
-          "name": "authority",
-          "isMut": true,
-          "isSigner": true
+          name: 'authority',
+          isMut: true,
+          isSigner: true,
         },
         {
-          "name": "systemProgram",
-          "isMut": false,
-          "isSigner": false
+          name: 'systemProgram',
+          isMut: false,
+          isSigner: false,
         },
         {
-          "name": "viktrchAccount",
-          "isMut": true,
-          "isSigner": false
+          name: 'derivedAddress',
+          isMut: true,
+          isSigner: false,
         },
         {
-          "name": "kolyanAccount",
-          "isMut": true,
-          "isSigner": false
+          name: 'kolyanAccount',
+          isMut: true,
+          isSigner: false,
         },
         {
-          "name": "derivedAddress",
-          "isMut": true,
-          "isSigner": false
-        }
+          name: 'viktrchAccount',
+          isMut: true,
+          isSigner: false,
+        },
       ],
-      "args": [
+      args: [
         {
-          "name": "title",
-          "type": "string"
+          name: 'title',
+          type: 'string',
         },
         {
-          "name": "content",
-          "type": "string"
+          name: 'content',
+          type: 'string',
         },
         {
-          "name": "textLimit",
-          "type": "u32"
+          name: 'image',
+          type: 'string',
         },
         {
-          "name": "rank",
-          "type": "u64"
-        }
-      ]
+          name: 'textLimit',
+          type: 'u32',
+        },
+        {
+          name: 'rank',
+          type: 'u64',
+        },
+      ],
     },
     {
-      "name": "updateAd",
-      "accounts": [
+      name: 'transferTax',
+      accounts: [
         {
-          "name": "ad",
-          "isMut": true,
-          "isSigner": false
+          name: 'ad',
+          isMut: true,
+          isSigner: true,
         },
         {
-          "name": "authority",
-          "isMut": false,
-          "isSigner": true
-        }
+          name: 'authority',
+          isMut: true,
+          isSigner: true,
+        },
+        {
+          name: 'systemProgram',
+          isMut: false,
+          isSigner: false,
+        },
+        {
+          name: 'derivedAddress',
+          isMut: true,
+          isSigner: false,
+        },
+        {
+          name: 'kolyanAccount',
+          isMut: true,
+          isSigner: false,
+        },
+        {
+          name: 'viktrchAccount',
+          isMut: true,
+          isSigner: false,
+        },
       ],
-      "args": [
+      args: [
         {
-          "name": "title",
-          "type": "string"
+          name: 'tax',
+          type: 'u64',
         },
-        {
-          "name": "content",
-          "type": "string"
-        }
-      ]
+      ],
     },
     {
-      "name": "appendAdContent",
-      "accounts": [
+      name: 'updateAd',
+      accounts: [
         {
-          "name": "ad",
-          "isMut": true,
-          "isSigner": false
+          name: 'ad',
+          isMut: true,
+          isSigner: false,
         },
         {
-          "name": "authority",
-          "isMut": false,
-          "isSigner": true
-        }
+          name: 'authority',
+          isMut: false,
+          isSigner: true,
+        },
       ],
-      "args": [
+      args: [
         {
-          "name": "content",
-          "type": "string"
-        }
-      ]
+          name: 'title',
+          type: 'string',
+        },
+        {
+          name: 'content',
+          type: 'string',
+        },
+      ],
     },
     {
-      "name": "deleteAd",
-      "accounts": [
+      name: 'appendAdContent',
+      accounts: [
         {
-          "name": "ad",
-          "isMut": true,
-          "isSigner": false
+          name: 'ad',
+          isMut: true,
+          isSigner: false,
         },
         {
-          "name": "authority",
-          "isMut": true,
-          "isSigner": true
-        }
+          name: 'authority',
+          isMut: false,
+          isSigner: true,
+        },
       ],
-      "args": []
-    }
+      args: [
+        {
+          name: 'content',
+          type: 'string',
+        },
+      ],
+    },
+    {
+      name: 'deleteAd',
+      accounts: [
+        {
+          name: 'ad',
+          isMut: true,
+          isSigner: false,
+        },
+        {
+          name: 'authority',
+          isMut: true,
+          isSigner: true,
+        },
+      ],
+      args: [],
+    },
   ],
-  "accounts": [
+  accounts: [
     {
-      "name": "ad",
-      "type": {
-        "kind": "struct",
-        "fields": [
+      name: 'ad',
+      type: {
+        kind: 'struct',
+        fields: [
           {
-            "name": "title",
-            "type": "string"
+            name: 'title',
+            type: 'string',
           },
           {
-            "name": "content",
-            "type": "string"
+            name: 'content',
+            type: 'string',
           },
           {
-            "name": "timestamp",
-            "type": "i64"
+            name: 'image',
+            type: 'string',
           },
           {
-            "name": "authority",
-            "type": "publicKey"
+            name: 'timestamp',
+            type: 'i64',
           },
           {
-            "name": "textLimit",
-            "type": "u32"
+            name: 'authority',
+            type: 'publicKey',
           },
           {
-            "name": "rank",
-            "type": "u64"
-          }
-        ]
-      }
-    }
+            name: 'textLimit',
+            type: 'u32',
+          },
+          {
+            name: 'rank',
+            type: 'u64',
+          },
+        ],
+      },
+    },
   ],
-  "errors": [
+  types: [
     {
-      "code": 6000,
-      "name": "TitleTooLong",
-      "msg": "The provided title should be 280 characters long maximum."
+      name: 'Categories',
+      type: {
+        kind: 'enum',
+        variants: [
+          {
+            name: 'Buy',
+          },
+          {
+            name: 'Sell',
+          },
+          {
+            name: 'LookingForJob',
+          },
+          {
+            name: 'JobOffer',
+          },
+          {
+            name: 'NFT',
+          },
+          {
+            name: 'Message',
+          },
+          {
+            name: 'Other',
+          },
+        ],
+      },
+    },
+  ],
+  errors: [
+    {
+      code: 6000,
+      name: 'TitleTooLong',
+      msg: 'The provided title should be 280 characters long maximum.',
     },
     {
-      "code": 6001,
-      "name": "TextLimitExceeded",
-      "msg": "Can not update Ad. Text limit will be exceeded."
-    }
-  ]
+      code: 6001,
+      name: 'TextLimitExceeded',
+      msg: 'Can not update Ad. Text limit will be exceeded.',
+    },
+  ],
 };

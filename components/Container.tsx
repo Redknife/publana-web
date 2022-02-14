@@ -3,6 +3,7 @@ import Head from 'next/head';
 import NextLink from 'next/link';
 import { useTheme } from 'next-themes';
 
+import { NetworkSelect } from 'components/NetworkSelect';
 import { Footer } from 'components/Footer';
 
 type ContainerProps = {
@@ -70,6 +71,10 @@ export const Container = (props: ContainerProps) => {
               About
             </a>
           </NextLink>
+        </div>
+
+        <div className="ml-auto mr-4">
+          <NetworkSelect />
         </div>
 
         <button

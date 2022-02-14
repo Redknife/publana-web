@@ -1,17 +1,22 @@
 import { useEffect, useState, useCallback } from 'react';
 import Link from 'next/link';
 import { Program, Coder } from '@project-serum/anchor';
-import { useConnection } from '@solana/wallet-adapter-react';
+import { useConnection, useAnchorWallet } from '@solana/wallet-adapter-react';
 import { PublicKey } from '@solana/web3.js';
+import { MdDelete } from 'react-icons/md';
 
 import idl from 'idl/solana_ads.json';
 import { SolanaAds, IDL } from 'idl/solana_ads';
 import { Spinner } from 'components/Spinner';
+import { PubSkeleton } from 'components/Skeletons';
+import { useProgram } from 'hooks/useProgram';
+import { cusper } from 'utils/cusper';
 
 const programId = new PublicKey(idl.metadata.address);
 const coder = new Coder(IDL);
 
 export const PubsList = () => {
+  const wallet = useAnchorWallet();
   const { connection } = useConnection();
 
   const [accounts, setAccounts] = useState<
@@ -50,6 +55,34 @@ export const PubsList = () => {
       setIsAccountsLoading(false);
     }
   }, [connection]);
+
+  const program = useProgram();
+  const handleDeleteClick = useCallback(
+    async (e) => {
+      e.preventDefault();
+      e.stopPropagation();
+
+      if (program) {
+        try {
+          await program.rpc.deleteAd({
+            accounts: {
+              authority: program.provider.wallet.publicKey,
+              ad: e.currentTarget.dataset.pk,
+            },
+          });
+          await fetchAccounts();
+        } catch (e) {
+          try {
+            cusper.throwError(e as any);
+          } catch (e) {
+            console.log(e);
+          }
+        }
+      }
+    },
+    [program, fetchAccounts],
+  );
+
   useEffect(() => {
     fetchAccounts();
   }, [fetchAccounts]);
@@ -67,37 +100,13 @@ export const PubsList = () => {
         {isAccountsLoading &&
           !accounts.length &&
           [1, 2, 3, 4].map((skelId) => (
-            <div
-              key={skelId}
-              className={`
-              w-full
-              flex items-center
-              space-x-4
-              p-6
-              bg-white dark:bg-gray-800
-              border-4 border-white dark:border-gray-800
-              rounded-xl shadow-lg
-            `}
-            >
-              <div className="animate-pulse flex space-x-4 w-full">
-                <div className="flex-1 space-y-3 py-1">
-                  <div className="grid grid-cols-4 gap-4">
-                    <div className="h-2 bg-gray-200 rounded col-span-1" />
-                    <div className="h-2 bg-gray-200 rounded col-span-1" />
-                    <div className="h-2 bg-gray-200 rounded col-span-2" />
-                  </div>
-                  <div className="grid grid-cols-3 gap-4">
-                    <div className="h-2 bg-gray-200 rounded col-span-1" />
-                    <div className="h-2 bg-gray-200 rounded col-span-2" />
-                  </div>
-                  <div className="h-2 bg-gray-200 rounded" />
-                </div>
-              </div>
-            </div>
+            <PubSkeleton key={skelId} variant="small" />
           ))}
         {accounts.map(({ account, publicKey }) => {
           const pk = publicKey.toString();
           const rank = account.rank.toNumber();
+          const isOwns = wallet && account.authority.equals(wallet?.publicKey);
+
           return (
             <Link href={`/pub/${pk}`} key={pk}>
               <a
@@ -125,6 +134,27 @@ export const PubsList = () => {
                   <div className="absolute top-1 right-2.5 font-bold text-amber-500">
                     {rank}
                   </div>
+                )}
+                {isOwns && (
+                  <button
+                    onClick={handleDeleteClick}
+                    data-pk={pk}
+                    className={`
+                      absolute
+                      bottom-[0.25em]
+                      right-[0.25em]
+                      bg-white
+                      text-xl
+                      p-0.5
+                      rounded-md
+                      text-gray-900
+                      z-50
+                      opacity-10
+                      hover:opacity-100
+                  `}
+                  >
+                    <MdDelete />
+                  </button>
                 )}
               </a>
             </Link>

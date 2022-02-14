@@ -12,6 +12,8 @@ import { kolyanPublicKey, viktrchPublicKey } from 'consts';
 import { cusper } from 'utils/cusper';
 import { useProgram } from 'hooks/useProgram';
 import { Container } from 'components/Container';
+import { Form, Input, Textarea } from 'components/Form';
+import { ImageInput } from 'components/ImageInput';
 import { Spinner } from 'components/Spinner';
 
 const MAX_SIZE_TX = 276;
@@ -37,6 +39,7 @@ const Add: NextPage = () => {
       const content = JSON.parse(
         JSON.stringify(e.target.elements.content.value),
       );
+      const image = e.target.elements.image.value || '';
       const textLimit = title.length + content.length;
       let chunks = chunkString(`${title}${content}`, MAX_SIZE_TX) as string[];
       const firstContent = chunks.shift()?.substring(title.length);
@@ -56,6 +59,7 @@ const Add: NextPage = () => {
         const createAdTx = await program.transaction.createAd(
           title,
           firstContent,
+          image,
           textLimit,
           new BN(rank),
           {
@@ -76,8 +80,9 @@ const Add: NextPage = () => {
         console.log('Sign `createAd` transaction', {
           title,
           content: firstContent,
-          rank,
+          image,
           textLimit,
+          rank,
           accounts: {
             ad: adAccountKeys.publicKey.toString(),
             kolyanAccount: kolyanPublicKey.toString(),
@@ -144,85 +149,53 @@ const Add: NextPage = () => {
   return (
     <Container>
       <div className="prose dark:prose-dark mb-6">
-        <h1>Place the ad</h1>
+        <h1>Place the pub</h1>
       </div>
 
-      <div className="flex space-x-4">
+      <div className="flex space-x-4 mb-6">
         <WalletMultiButton />
         <WalletDisconnectButton />
       </div>
 
       {wallet && (
-        <>
-          <form
-            ref={formRef}
-            className="w-full space-y-4 mt-6"
-            onSubmit={handlePlaceAdSubmit}
-          >
-            <input
-              type="text"
-              name="title"
-              placeholder="Title"
-              maxLength={280}
-              disabled={isSubmitting}
-              className="
-                form-input
-                w-full
-                px-4 py-3
-                text-gray-800 dark:text-gray-100
-                rounded-md
-                border-2 border-gray-300 dark:border-gray-800
-                focus:ring-amber-400 focus:border-amber-400 dark:focus:border-amber-400
-                hover:border-amber-400 dark:hover:border-amber-400
-                bg-white dark:bg-gray-800
-                transition
-              "
-              required
-            />
+        <Form ref={formRef} onSubmit={handlePlaceAdSubmit}>
+          <Input
+            type="text"
+            name="title"
+            placeholder="Title"
+            maxLength={280}
+            disabled={isSubmitting}
+            className="w-full"
+            required
+          />
 
-            <textarea
-              name="content"
-              placeholder="Message"
-              disabled={isSubmitting}
-              className="
-                form-input
-                w-full
-                px-4 py-3
-                text-gray-800 dark:text-gray-100
-                rounded-md
-                border-2 border-gray-300 dark:border-gray-800
-                focus:ring-amber-400 focus:border-amber-400 dark:focus:border-amber-400
-                hover:border-amber-400 dark:hover:border-amber-400
-                bg-white dark:bg-gray-800
-                transition
-              "
-              required
-            />
+          <Textarea
+            name="content"
+            placeholder="Message"
+            disabled={isSubmitting}
+            className="w-full"
+            required
+          />
 
-            <input
-              type="number"
-              name="rank"
-              placeholder="Rank"
-              min="0"
-              disabled={isSubmitting}
-              className="
-                form-input
-                px-4 py-3
-                w-30
-                text-gray-800 dark:text-gray-100
-                rounded-md
-                border-2 border-gray-300 dark:border-gray-800
-                focus:ring-amber-400 focus:border-amber-400 dark:focus:border-amber-400
-                hover:border-amber-400 dark:hover:border-amber-400
-                bg-white dark:bg-gray-800
-                transition
-              "
-            />
+          <ImageInput
+            name="image"
+            placeholder="Cover image url"
+            className="w-full"
+          />
 
-            <button
-              type="submit"
-              disabled={isSubmitting}
-              className="
+          <Input
+            type="number"
+            name="rank"
+            placeholder="Rank"
+            min="0"
+            disabled={isSubmitting}
+            className="w-30"
+          />
+
+          <button
+            type="submit"
+            disabled={isSubmitting}
+            className="
                 flex items-center justify-center
                 w-full
                 px-3 py-2
@@ -233,12 +206,11 @@ const Add: NextPage = () => {
                 text-xl
                 transition
                 rounded-md"
-            >
-              {isSubmitting && <Spinner />}
-              Place
-            </button>
-          </form>
-        </>
+          >
+            {isSubmitting && <Spinner />}
+            Place
+          </button>
+        </Form>
       )}
     </Container>
   );
