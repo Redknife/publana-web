@@ -1,12 +1,13 @@
 import { useEffect, useState, useCallback } from 'react';
 import Link from 'next/link';
-import { Program, Coder } from '@project-serum/anchor';
+import { Coder } from '@project-serum/anchor';
 import { useConnection, useAnchorWallet } from '@solana/wallet-adapter-react';
 import { PublicKey } from '@solana/web3.js';
 import { MdDelete } from 'react-icons/md';
 
 import idl from 'idl/solana_ads.json';
-import { SolanaAds, IDL } from 'idl/solana_ads';
+import { IDL } from 'idl/solana_ads';
+import { ProgramPubAccount, PubAccount } from 'types';
 import { Spinner } from 'components/Spinner';
 import { PubSkeleton } from 'components/Skeletons';
 import { useProgram } from 'hooks/useProgram';
@@ -19,9 +20,7 @@ export const PubsList = () => {
   const wallet = useAnchorWallet();
   const { connection } = useConnection();
 
-  const [accounts, setAccounts] = useState<
-    Awaited<ReturnType<Program<SolanaAds>['account']['ad']['all']>>
-  >([]);
+  const [accounts, setAccounts] = useState<ProgramPubAccount[]>([]);
   const [isAccountsLoading, setIsAccountsLoading] = useState(false);
 
   const fetchAccounts = useCallback(async () => {
@@ -34,7 +33,7 @@ export const PubsList = () => {
           resp.map(({ pubkey, account }) => {
             return {
               publicKey: pubkey,
-              account: coder.accounts.decode(
+              account: coder.accounts.decode<PubAccount>(
                 IDL.accounts[0].name,
                 account.data,
               ),
@@ -112,8 +111,7 @@ export const PubsList = () => {
               <a
                 className={`
                   w-full
-                  flex items-center
-                  space-x-4
+                  flex
                   p-6
                   bg-white dark:bg-gray-800
                   border-4 border-white dark:border-gray-800 hover:border-amber-100 dark:hover:border-amber-100
@@ -122,6 +120,28 @@ export const PubsList = () => {
                   relative
                 `}
               >
+                <div className="hidden sm:block min-w-[160px] max-w-[160px] mr-4 flex-auto mt-1 rounded-md overflow-hidden">
+                  {(account.image as string).length ? (
+                    <img
+                      src={account.image as string}
+                      className="block"
+                      alt=""
+                    />
+                  ) : (
+                    <div className="relative pb-[100%]">
+                      <div
+                        className={`
+                          absolute top-0 bottom-0 right-0 left-0
+                          flex items-center justify-center
+                          text-4xl text-gray-400 dark:text-gray-500
+                          bg-gray-100 dark:bg-gray-700
+                      `}
+                      >
+                        {(account.title as string).charAt(0)}
+                      </div>
+                    </div>
+                  )}
+                </div>
                 <div className="overflow-hidden max-w-full">
                   <div className="text-xl font-medium text-gray-800 dark:text-amber-200">
                     {account.title as string}
@@ -131,7 +151,7 @@ export const PubsList = () => {
                   </p>
                 </div>
                 {rank > 0 && (
-                  <div className="absolute top-1 right-2.5 font-bold text-amber-500">
+                  <div className="absolute top-1 right-2 font-bold text-amber-500">
                     {rank}
                   </div>
                 )}
