@@ -17,6 +17,7 @@ export const NetworkSelect = () => {
   return (
     <select
       onChange={handleSelectChange}
+      value={network}
       className="
         form-select
         block
@@ -33,7 +34,7 @@ export const NetworkSelect = () => {
     >
       {enumEntries.map(([label, value]) => {
         return (
-          <option key={value} value={value} selected={network === value}>
+          <option key={value} value={value}>
             {label}
           </option>
         );
